@@ -1,23 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
+import {Navbar} from "./Components/Navbar"
+import Carousel from "./Components/Carousel" 
+import Cake from './Components/Cake';
+import Login from './Components/Login';
+import { AddCake } from './Components/AddCake';
+
+let cake= { name:"Choclate cake",price:"500",image:"cake1.jpg"}
+let cake2= { name:"Rainbow cake",price:"500",image:"rainbow.jpg"}
+let cake3= { name:"Fruit cake",price:"500",image:"fruit.jpg"}
 
 function App() {
-  return (
+  return (  
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <Navbar ></Navbar>
+      <Carousel></Carousel>
+      <AddCake></AddCake>
+     <div class="row">
+       <Cake data={cake}/>
+       <Cake data={cake2}/>
+       <Cake data={cake3}/>
+     </div>
+     <Login></Login>
+
     </div>
   );
 }
