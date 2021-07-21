@@ -1,17 +1,30 @@
 import {useState} from "react"
+import  { Link, withRouter} from "react-router-dom";
 
-export function Navbar(){
-var [tittle, setTitle]=useState("Cake shop");
+function Navbar(props){
+  var [tittle, setTitle]=useState("Cake Gellery");
+  var [searchText, setSearchText]=useState(undefined);
 
- function demo(event) {
-  event.preventDefault();
-  var value=document.getElementById("searchInput").value;
-  setTitle(value);  
-}
+  function getSearchText(event){
+    setSearchText(event.target.value)
+  }
+
+  function search(e){
+    e.preventDefault()
+    if(searchText){
+      var url="/search?q="+searchText;
+      props.history.push(url);
+    }
+  }
+//  function demo(event) {
+//   event.preventDefault();
+//   var value=document.getElementById("searchInput").value;
+//   setTitle(value);  
+// }
 
     return(
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">{tittle}</a>
+        <nav class="navbar navbar-expand-lg navbar-dark text-white" style={{backgroundColor:"#38768a"}}>
+  <Link to="/"><a class="navbar-brand" href="#">{tittle}</a> </Link>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -22,29 +35,25 @@ var [tittle, setTitle]=useState("Cake shop");
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="#">Products</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
+      
       <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        <a class="nav-link" href="#" >Gallery</a>
       </li>
+      
     </ul>
+    <form style={{margin:"auto"}} class="form-inline my-2 my-lg-0">
+      <input id="searchInput" onChange={getSearchText} class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+      {/* <Link to={`/search?q=${searchText}`}> */}
+      <button  onClick={search} class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+      {/* </Link> */}
+    </form>
     <form class="form-inline my-2 my-lg-0">
-      <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-      <button onClick={demo} class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <Link to="/login"> <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Login</button></Link>
     </form>
   </div>
 </nav>
     );
 }
-export default Navbar
+export default Navbar = withRouter(Navbar)
