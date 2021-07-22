@@ -1,5 +1,6 @@
 import {Component} from "react"
 import  { Link} from "react-router-dom";
+import axios from 'axios';
 
 class Login extends Component{
   constructor(){
@@ -13,7 +14,7 @@ class Login extends Component{
     this.user.email=event.target.value;
   }
   handlePass=(event)=>{
-    this.user.pass=event.target.value;
+    this.user.password=event.target.value;
   }
   login=(event)=>{
     this.setState({
@@ -22,9 +23,20 @@ class Login extends Component{
     console.log(this.user);
     // this.user.name="Nishu"
 
-    if(this.user.email=="test@gmail.com" && this.user.pass=="test"){
+    // if(this.user.email=="test@gmail.com" && this.user.pass=="test"){
+    //   this.props.history.push("/")
+    // }
+    let apiurl="https://apifromashu.herokuapp.com/api/login"
+    axios({
+      method:"post",
+      url:apiurl,
+      data:this.user  // we requrie structure like {email,name,password}
+  }).then((response)=>{
+      console.log("response from login api",response)
       this.props.history.push("/")
-    }
+  },(error)=>{
+   console.log("error from login api",error)
+  })
     event.preventDefault();
 }
   render(){
