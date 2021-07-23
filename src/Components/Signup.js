@@ -1,13 +1,13 @@
-import {Component} from "react"
+import {Component,PureComponent} from "react"
 import { Link } from "react-router-dom"
 import axios from 'axios';
-class Signup extends Component{
+class Signup extends PureComponent{
     constructor(){
         super()
         this.state = {
             name:"nishi"
         }
-    }
+    } 
     user = {}
 
     handleEmail = (event)=>{

@@ -1,13 +1,10 @@
-import {useState} from "react"
+import {useState , useEffect} from "react"
 import  { Link, withRouter} from "react-router-dom";
 
 function Navbar(props){
   var [tittle, setTitle]=useState("Cake Gellery");
   var [searchText, setSearchText]=useState(undefined);
 
-  function getSearchText(event){
-    setSearchText(event.target.value)
-  }
 
   function search(e){
     e.preventDefault()
@@ -16,6 +13,10 @@ function Navbar(props){
       props.history.push(url);
     }
   }
+  function getSearchText(event){
+    setSearchText(event.target.value)
+  }
+
 //  function demo(event) {
 //   event.preventDefault();
 //   var value=document.getElementById("searchInput").value;
@@ -32,10 +33,10 @@ function Navbar(props){
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <Link to="/" class="nav-link" href="#">Home <span class="sr-only">(current)</span></Link>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Products</a>
+       <Link to="/add-cake" class="nav-link" href="#">Add Cake</Link>
       </li>
       
       <li class="nav-item">
@@ -49,9 +50,14 @@ function Navbar(props){
       <button  onClick={search} class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
       {/* </Link> */}
     </form>
-    <form class="form-inline my-2 my-lg-0">
-    <Link to="/login"> <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Login</button></Link>
-    </form>
+    {props.isuserloggedin==false && <form class="form-inline my-2 my-lg-0">
+    <Link to="/login"> <button class="btn btn-light my-2 my-sm-0 mr-2" type="submit">Login</button></Link>
+    </form>}
+    {props.isuserloggedin==true &&  <form class="form-inline my-2 my-lg-0">
+    <button class="btn btn-outline-light my-2 my-sm-0 mr-2" type="submit">Cart</button>
+    <button class="btn btn-light my-2 my-sm-0 mr-2" type="submit">Logout</button>
+
+    </form>}
   </div>
 </nav>
     );

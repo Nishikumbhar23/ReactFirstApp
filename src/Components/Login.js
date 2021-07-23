@@ -1,5 +1,5 @@
 import {Component} from "react"
-import  { Link} from "react-router-dom";
+import  { Link, withRouter} from "react-router-dom";
 import axios from 'axios';
 
 class Login extends Component{
@@ -17,27 +17,36 @@ class Login extends Component{
     this.user.password=event.target.value;
   }
   login=(event)=>{
-    this.setState({
-      name:"Nishu"
-    })
-    console.log(this.user);
+    
+    // this.setState({
+    //   name:"Nishu"
+    // })
     // this.user.name="Nishu"
 
     // if(this.user.email=="test@gmail.com" && this.user.pass=="test"){
     //   this.props.history.push("/")
     // }
-    let apiurl="https://apifromashu.herokuapp.com/api/login"
+    event.preventDefault()
+    console.log(this.user);
+
+    let apiurl = "https://apifromashu.herokuapp.com/api/login"
     axios({
-      method:"post",
-      url:apiurl,
-      data:this.user  // we requrie structure like {email,name,password}
-  }).then((response)=>{
-      console.log("response from login api",response)
-      this.props.history.push("/")
+        method:"post",
+        url:apiurl,
+        data:this.user  // we requrie structure like {email,name,password}
+    }).then((response)=>{
+        console.log("response from login api",response)
+        if(response.data.token){
+            this.props.loggedin()
+            localStorage.token = response.data.token
+            this.props.history.push("/")
+        }
+        else{
+            alert("Invalid Credentials")
+        }
   },(error)=>{
    console.log("error from login api",error)
   })
-    event.preventDefault();
 }
   render(){
     return(
@@ -58,10 +67,11 @@ class Login extends Component{
       <div>
         <Link to="/sign-up">New User? Sign up Here</Link>
       </div>
+      <label className="errormessage">{this.state.errorMessage}</label>
       <button type="submit" onClick={this.login} class="btn btn-primary mt-3">Submit</button>
       </div>
         </form>
     );
   }
 }
-export default Login;
+export default withRouter(Login)
