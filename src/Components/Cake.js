@@ -1,7 +1,11 @@
-function Cake(props){
+import {useContext} from "react"
+import {MyContext} from "./Home"
+import  {withRouter} from "react-router-dom";
 
-    console.log("................",props)
-    function showCakeDetails(){
+function Cake(props){
+    const context1 = useContext(MyContext)
+    // console.log("................",props)
+    function showCakeDetails(event){
         props.history.push('cake/'+props.data.cakeid)
     }
     return(
@@ -18,4 +22,4 @@ function Cake(props){
 
     )
 }
-export default Cake
+export default withRouter(Cake)

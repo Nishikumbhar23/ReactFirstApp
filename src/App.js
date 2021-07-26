@@ -27,8 +27,7 @@ function loggedin(){
       <Route exact path="/sign-up" component={Signup}></Route>     
       <Route exact path="/search" component={Search}></Route>
       <Route exact path="/add-cake" component={AddCake}></Route>
-
-      <Route exact path="/cake/:paramentername" component={CakeDetails}></Route>
+      <Route exact path="/cake/:cakeid" component={CakeDetails}></Route>
       </Switch>
       </BrowserRouter>
     </div>
