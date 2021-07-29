@@ -1,3 +1,18 @@
+export var AuthReducer= function (state={
+    isuserloggedin:localStorage.token?true:false
+}, action) {
+    switch(action.type){
+        case "LOGIN" :{
+            state= {...state}
+            state["isuserloggedin"]=true;
+            state["user"]=action.payload
+            console.log(">>>",state)
+            return state
+        }
+        default:return state
+    }
+    
+}
 export var Baker1= function (state={
     choco_pastry:10
 }, action) {

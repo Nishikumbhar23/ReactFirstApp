@@ -1,14 +1,26 @@
 import {Component} from "react"
 import  { Link, withRouter} from "react-router-dom";
 import axios from 'axios';
+import { connect } from "react-redux"
+import Loader from 'react-loader-spinner';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Login extends Component{
   constructor(){
     super()
     this.state={
-      name:"Nishi"
+      name:"Nishi",
+      loading: "false"
     }
   }
+  hideLoader = () => {
+    this.setState({ loading: false });
+}
+showLoader = () => {
+    this.setState({ loading: true });
+}
+
  user={};
   handleEmail=(event)=>{
     this.user.email=event.target.value;
@@ -16,17 +28,10 @@ class Login extends Component{
   handlePass=(event)=>{
     this.user.password=event.target.value;
   }
-  login=(event)=>{
-    
-    // this.setState({
-    //   name:"Nishu"
-    // })
-    // this.user.name="Nishu"
-
-    // if(this.user.email=="test@gmail.com" && this.user.pass=="test"){
-    //   this.props.history.push("/")
-    // }
+  login=(event)=>{  
     event.preventDefault()
+
+
     console.log(this.user);
 
     let apiurl = "https://apifromashu.herokuapp.com/api/login"
@@ -37,19 +42,46 @@ class Login extends Component{
     }).then((response)=>{
         console.log("response from login api",response)
         if(response.data.token){
-            this.props.loggedin()
+            // this.props.loggedin()
+            this.props.dispatch({
+              type:"LOGIN",
+              payload:response.data
+            })
             localStorage.token = response.data.token
+            this.showLoader()
+            
+            toast.success("Login Succesfull!", {
+              position: "top-right",
+            });
             this.props.history.push("/")
-        }
+        }     
         else{
-            alert("Invalid Credentials")
+          toast.error("Login Failed!", {
+            position: "top-right",
+          });
+            // alert("Invalid Credentials")
+            // this.hideLoader()
         }
   },(error)=>{
+    this.setState({
+      errorMessage: "Invalid Credentials"
+    })
    console.log("error from login api",error)
   })
 }
   render(){
     return(
+      <div className="container">
+        {/* {this.state.loading && 
+         <Loader
+        
+           type="Oval"
+           color="#38768a"
+           height={100}
+           width={100}
+           justifyContent= 'center'
+           alignItems='center'
+         />} */}
             <form>
                 <div class="Login-form p-4 my-4" style={{width:"60%", margin:"0 auto",background:"whitesmoke"}}>
       <div class="form-group">
@@ -63,15 +95,25 @@ class Login extends Component{
         <label for="exampleInputPassword1">Password</label>
         <input type="password" onChange={this.handlePass} class="form-control" id="exampleInputPassword1"/>
       </div>
-      
-      <div>
+  
+      <div className="form-group">
+           <Link to="/recoverpassword">Forgot your password?</Link>
+      </div>
+      <div className="form-group">
+          <label className="errormessage" style={{color:"red"}}>{this.state.errorMessage}</label><br></br>
+          <button type="submit" onClick={this.login} class="btn btn-primary mt-2">Submit</button>
+      </div>
+      <div className="form-group text-center">
         <Link to="/sign-up">New User? Sign up Here</Link>
       </div>
-      <label className="errormessage">{this.state.errorMessage}</label>
-      <button type="submit" onClick={this.login} class="btn btn-primary mt-3">Submit</button>
       </div>
         </form>
+      
+        </div>
+        
     );
   }
 }
-export default withRouter(Login)
+// export default withRouter(Login)
+Login= withRouter(Login)
+export default connect() (Login)

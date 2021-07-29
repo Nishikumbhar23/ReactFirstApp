@@ -1,6 +1,8 @@
 import {Component,PureComponent} from "react"
 import { Link } from "react-router-dom"
 import axios from 'axios';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 class Signup extends PureComponent{
     constructor(){
         super()
@@ -20,9 +22,15 @@ class Signup extends PureComponent{
         this.user.name = event.target.value
       }
     SignUp = (event)=>{
+        event.preventDefault()
         // this.setState({
-        //     errorMessage:"Invalid Credentials"
+        //      errorMessage:"Please Enter all the details"
         // })
+        if( this.user.name=="" || this.user.name==undefined || this.user.email== "" || this.user.email==undefined || this.user.password=="" || this.user.password==undefined){
+            toast.error("Please enter all details", {
+                position: "top-center",
+              });
+        }
         let apiurl="https://apifromashu.herokuapp.com/api/register"
         axios({
           method:"post",
@@ -34,7 +42,6 @@ class Signup extends PureComponent{
        console.log("error from signup api",error)
       })
 
-       event.preventDefault()
     }
 
     render(){

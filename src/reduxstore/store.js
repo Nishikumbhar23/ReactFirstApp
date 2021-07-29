@@ -1,7 +1,7 @@
 import {createStore , combineReducers} from "redux"
-import { Baker1,Baker2 } from "./reducers"
+import { Baker1,Baker2,AuthReducer } from "./reducers"
 
-var reducers = combineReducers({Baker1,Baker2})
+var reducers = combineReducers({Baker1,Baker2,AuthReducer})
 var store= createStore(reducers)
 
 export default store
