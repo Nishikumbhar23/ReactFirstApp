@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import Loader from 'react-loader-spinner';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {Loginthunk} from '../reduxstore/thunks'
 
 class Login extends Component{
   constructor(){
@@ -30,44 +31,55 @@ showLoader = () => {
   }
   login=(event)=>{  
     event.preventDefault()
-
-
     console.log(this.user);
+    
+    if( this.user.email== "" || this.user.email==undefined || this.user.password=="" || this.user.password==undefined){
+      toast.error("Please enter all details", {
+          position: "top-center",
+        });
+      }
+    this.props.dispatch(Loginthunk(this.user))
+    
+    if(localStorage.token){
+      console.log("mmmmmmm")
+      this.props.history.push("/");
+    }
+    // localStorage.token = response.data.token
 
-    let apiurl = "https://apifromashu.herokuapp.com/api/login"
-    axios({
-        method:"post",
-        url:apiurl,
-        data:this.user  // we requrie structure like {email,name,password}
-    }).then((response)=>{
-        console.log("response from login api",response)
-        if(response.data.token){
-            // this.props.loggedin()
-            this.props.dispatch({
-              type:"LOGIN",
-              payload:response.data
-            })
-            localStorage.token = response.data.token
-            this.showLoader()
+    // let apiurl = "https://apifromashu.herokuapp.com/api/login"
+  //   axios({
+  //       method:"post",
+  //       url:apiurl,
+  //       data:this.user  // we requrie structure like {email,name,password}
+  //   }).then((response)=>{
+  //       console.log("response from login api",response)
+  //       if(response.data.token){
+  //           // this.props.loggedin()
+  //           this.props.dispatch({
+  //             type:"LOGIN",
+  //             payload:response.data
+  //           })
+  //           localStorage.token = response.data.token
+  //           this.showLoader()
             
-            toast.success("Login Succesfull!", {
-              position: "top-right",
-            });
-            this.props.history.push("/")
-        }     
-        else{
-          toast.error("Login Failed!", {
-            position: "top-right",
-          });
-            // alert("Invalid Credentials")
-            // this.hideLoader()
-        }
-  },(error)=>{
-    this.setState({
-      errorMessage: "Invalid Credentials"
-    })
-   console.log("error from login api",error)
-  })
+  //           toast.success("Login Succesfull!", {
+  //             position: "top-right",
+  //           });
+  //           this.props.history.push("/")
+  //       }     
+  //       else{
+  //         toast.error("Login Failed!", {
+  //           position: "top-right",
+  //         });
+  //           // alert("Invalid Credentials")
+  //           // this.hideLoader()
+  //       }
+  // },(error)=>{
+  //   this.setState({
+  //     errorMessage: "Invalid Credentials"
+  //   })
+  //  console.log("error from login api",error)
+  // })
 }
   render(){
     return(
@@ -116,4 +128,13 @@ showLoader = () => {
 }
 // export default withRouter(Login)
 Login= withRouter(Login)
-export default connect() (Login)
+export default connect(function (state,props) {
+  return{
+    isuserloggedin:state["AuthReducer"]["isuserloggedin"],
+    name:state["AuthReducer"]["user"] && state["AuthReducer"]["user"]["name"],
+    token:state["AuthReducer"]["user"] && state["AuthReducer"]["user"]["token"]
+   }
+}
+) (Login)
+
+

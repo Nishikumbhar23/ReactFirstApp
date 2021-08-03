@@ -2,11 +2,12 @@ import { useState, useEffect } from "react"
 import StarRatings from 'react-star-ratings';
 import axios from "axios"
 import Loader from "react-loader-spinner";
+import { ToastContainer, toast } from 'react-toastify';
 
 function CakeDetails(props){
    var [cakeDetails , setCakedetails]  = useState({})
    var [loader, setLoader] = useState(false);
-
+    
    useEffect(()=>{
     let apiurl = "https://apifromashu.herokuapp.com/api" + "/cake/" + props.match.params.cakeid
     setLoader(true)
@@ -28,6 +29,13 @@ function CakeDetails(props){
     })
     
    }, [])
+   var cakedata={
+                image:cakeDetails.image,
+                name:cakeDetails.name,
+                cakeid:cakeDetails.cakeid,
+                price:cakeDetails.price,
+                weight:cakeDetails.weight,
+            }
  var addToCart = (event) => {
         event.preventDefault();
         if(!localStorage.token) {
@@ -36,15 +44,19 @@ function CakeDetails(props){
         } else {
             // props.history.push("/cart");
             let apiurl = process.env.REACT_APP_BASE_API + "/addcaketocart"
-       
         axios(
             {
                 method: 'post',
                 url: apiurl,
+                headers:{
+                    authtoken:localStorage.token
+                },
+                data:cakedata
             }
         ).then((response) => {
-            alert("added to cart")
-            console.log("request sent from cake details api : " + JSON.stringify(response.data.data))
+            toast(cakeDetails.name + "Added to cart")
+            // alert("added to cart")
+            console.log("responce from add to cake cart : " + response.data.data)
             props.history.push("/cart")
         }, (error) => {
             alert("error while adding to cart")
@@ -103,12 +115,3 @@ function CakeDetails(props){
 }
 
 export default CakeDetails
-
-
-// export function CakeDetails(props){
-    
-//     return(
-        
-//     );
-// }
-// export default CakeDetails

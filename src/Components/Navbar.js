@@ -22,13 +22,7 @@ function Navbar(props){
   }
   function showCart(event) {
     event.preventDefault();
-    if(!localStorage.token) {
-        alert("Please login or register to view details")
-        
-    } else {
-        props.history.push("/cart")
-        console.log("props.token : " , props.token)
-    }
+     props.history.push("/cart");
   }
 //  function demo(event) {
 //   event.preventDefault();
@@ -68,7 +62,7 @@ function Navbar(props){
     </form>}
     {props.isuserloggedin==true &&  <form class="form-inline my-2 my-lg-0">
     <button onClick={showCart} class="btn btn-outline-light my-2 my-sm-0 mr-2" type="submit">Cart</button>
-    <button onClick={logout} class="btn btn-light my-2 my-sm-0 mr-2" type="submit">Logout</button>
+    <button onClick={logout} class="btn btn-light my-2 my-sm-0 mr-2 ml-auto" type="submit">Logout</button>
 
     </form>}
   </div>
