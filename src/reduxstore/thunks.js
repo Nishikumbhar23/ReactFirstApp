@@ -8,6 +8,9 @@ import axios from "axios"
         var result  = await  axios({
             method:"post",
             url:"https://apifromashu.herokuapp.com/api/login",
+            headers:{
+                authtoken:localStorage.token
+            },
             data:data
         })
         localStorage.token = result.data.token
@@ -16,11 +19,41 @@ import axios from "axios"
                 type:"LOGIN_SUCCESS",
                 payload:result.data
             })
-            
         }
         else{
             dispatch({
                 type:"LOGIN_FAILURE"
+            })
+        }
+       
+    }
+}
+export  function PlaceOrderthunk(data){
+    return async (dispatch)=>{
+        dispatch({
+            type:"CART_FETCHING"
+        })
+        var result  = await  axios({
+            method:"post",
+            url:"https://apifromashu.herokuapp.com/api/addcakeorder",
+            data:data,
+            headers:{
+                authtoken:localStorage.token
+            }
+        })
+        console.log("result",result)
+        localStorage.token = result.data.token
+        console.log("token==",result.data.token)
+        if(result.data.token){
+            dispatch({
+                type:"PLACEORDER_SUCCESS",
+                payload:result.data
+            })
+            
+        }
+        else{
+            dispatch({
+                type:"PLACEORDER_FAILURE"
             })
         }
        

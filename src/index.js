@@ -11,11 +11,10 @@ import axios from "axios"
 export var cakesCart = axios.create()
 
 cakesCart.interceptors.request.use((request)=>{
-  console.log(localStorage.token);
+  // console.log(localStorage.token);
   request.headers["authtoken"] = localStorage.token
   return request;
 })
-
   //axios.interceptors.response.use((response)=>{
   //   alert("response")
   //   return response

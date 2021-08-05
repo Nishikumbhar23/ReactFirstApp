@@ -41,6 +41,57 @@ export var CakesCartItems= function (state={
             state["cartitems"] = action.payload
             return state
         }
+        case "REMOVE_CAKE_SUCCESS":{
+            state = {...state}
+            state["isloading"] = false
+            state['removedata'] = action.payload
+            console.log("remove cake",state)
+            return state;
+        }
+        case "REMOVE_FAILURE" :{
+            state= {...state}
+            state["isloading"] = false
+            state["removeerror"] = "Some Error Occurred"
+            return state
+        }
+        case "REMOVE_ITEM_SUCCESS":{
+            state = {...state}
+            state["isloading"] = false
+            state['removeitem'] = action.payload
+            console.log("remove cake",state)
+            return state;
+        }
+        case "REMOVE_ITEM_FAILURE" :{
+            state= {...state}
+            state["isloading"] = false
+            state["removeitemerror"] = "Some Error Occurred"
+            return state
+        }
+        case "ADD_CAKE_SUCCESS":{
+            state = {...state}
+            state["isloading"] = false
+            state['adddata'] = action.payload
+            console.log("add cake",state)
+            return state;
+        }
+        case "ADD_FAILURE" :{
+            state= {...state}
+            state["isloading"] = false
+            state["adderror"] = "Some Error Occurred"
+            return state
+        }
+        case "PLACEORDER_SUCCESS":{
+            state = {...state}
+            state["isloading"] = false
+            state['placeorder'] = action.payload
+            return state;
+        }
+        case "PLACEORDER_FAILURE" :{
+            state= {...state}
+            state["isloading"] = false
+            state["placeordererror"] = "Some Error Occurred"
+            return state
+        }
         case "CART_FAILURE" :{
             state= {...state}
             state["isloading"] = false

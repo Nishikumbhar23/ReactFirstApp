@@ -39,11 +39,14 @@ showLoader = () => {
         });
       }
     this.props.dispatch(Loginthunk(this.user))
+    setTimeout(() => {
+      if(this.props.isuserloggedin==true){
+        // alert("hiiii")
+        console.log(".........",this.props)
+        this.props.history.push("/");
+      } 
+    }, 1000);
     
-    if(localStorage.token){
-      console.log("mmmmmmm")
-      this.props.history.push("/");
-    }
     // localStorage.token = response.data.token
 
     // let apiurl = "https://apifromashu.herokuapp.com/api/login"
@@ -98,7 +101,7 @@ showLoader = () => {
                 <div class="Login-form p-4 my-4" style={{width:"60%", margin:"0 auto",background:"whitesmoke"}}>
       <div class="form-group">
           <h3 class="text-center" style={{color:"#38768a"}}>Login Form</h3>
-          <h6>Hello {this.state.name}</h6>
+          {/* <h6>Hello {this.state.name}</h6> */}
         <label for="exampleInputEmail1">Email address</label>
         <input type="email" onChange={this.handleEmail} class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
