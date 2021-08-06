@@ -134,8 +134,41 @@ function  *RemoveItem(action) {
 function *RemoveItemSaga(){
     yield takeEvery('Remove_Item' , RemoveItem)
   }
+/////////////////////////////////////////////////////
 
+
+
+  function *PlaceOrders(action){
+    console.log("???",action.payload)
+    yield put({
+        type: "CART_FETCHING"
+    })
+    let apiUrl = "https://apifromashu.herokuapp.com/api/addcakeorder"
+    let response=yield axios({
+        method: 'post',
+        url: apiUrl,
+        headers: {
+            authToken: localStorage.token
+        },
+        data: action.payload
+    })
+    console.log("Response from order cake????????", response)
+    if(response.data.message=="Removed  item from cart"){
+        yield put({
+            type: "PLACEORDER_SUCCESS",
+            payload: response.data.message
+        })
+    }
+    else{
+        yield put({
+            type: "PLACEORDER_FAILURE"
+        })
+    }
+}
+function *PlaceOrdersSaga(){
+    yield takeEvery('PlaceOrder_Items',PlaceOrders)
+  }
   export default function *RootSaga(){
     console.log("root saga ")
-    yield all([CartSaga(),RemoveCakeSaga(),AddCakeCartSaga(),RemoveItemSaga()])
+    yield all([CartSaga(),RemoveCakeSaga(),AddCakeCartSaga(),RemoveItemSaga(), PlaceOrdersSaga()])
 }  

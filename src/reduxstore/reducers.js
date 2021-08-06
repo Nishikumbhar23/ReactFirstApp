@@ -92,6 +92,18 @@ export var CakesCartItems= function (state={
             state["placeordererror"] = "Some Error Occurred"
             return state
         }
+        case "ORDER_SUCCESS":{
+            state = {...state}
+            state["isloading"] = false
+            state['order'] = action.payload
+            return state;
+        }
+        case "ORDER_FAILURE" :{
+            state= {...state}
+            state["isloading"] = false
+            state["ordererror"] = "Some Error Occurred"
+            return state
+        }
         case "CART_FAILURE" :{
             state= {...state}
             state["isloading"] = false

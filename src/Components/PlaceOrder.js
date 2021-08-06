@@ -1,7 +1,8 @@
 import {Component} from "react"
 import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import {PlaceOrderthunk} from '../reduxstore/thunks';
+import { toast } from "react-toastify";
+// import {PlaceOrderthunk} from '../reduxstore/thunks';
  
 function PlaceOrder(props){
     if (!props.isuserloggedin) {
@@ -13,34 +14,33 @@ function PlaceOrder(props){
     function handleAddress(event){user.address=event.target.value;}
     function handleArea(event){user.area=event.target.value;}
     function handleCity(event){user.city=event.target.value;}
-    function handlePincode(event){user.pincode=event.target.value;}
-
-
- let userdata={}
-
+    function handlePincode(event){user.pincode=event.target.value;};
+   
+  
 function handleSubmit(event) {
     event.preventDefault();
    let total=0;
-    props.cartitems && props.cartitems.map((dis)=> { 
-        total+= dis.price * dis.quantity
+    props.cartitems && props.cartitems.map((each, index)=> { 
+        total+= each.price * each.quantity
     })
     console.log("price:",total)
 
-    let userdata={
-        name:user.name,
-        phone:user.phone,
-        address:user.address,
-        area:user.area,
-        city:user.city,
-        pincode:user.pincode,
-        cakes:props.cartitems,
-        total:total
+    user.cakes=props.cartitems;
+    user.price=total;
+    console.log("<<<<<<>>>>>>",user);
+    // props.dispatch(PlaceOrderthunk(user))
+    props.dispatch({
+        type:"PlaceOrder_Items",
+        payload:user
+    })
+
+    if(props.placeorder){
+        toast.success("order placed successfully");
     }
-    console.log("<<<<<<>>>>>>",userdata);
-    props.dispatch(PlaceOrderthunk(userdata))
-
+    else{
+        toast("order placed successfully")
+    }
 }
-
     // render(){
     return(
         <div className="container">
@@ -103,6 +103,7 @@ PlaceOrder = withRouter(PlaceOrder)
 export default connect(function(state,props) {
   return {
     cartitems : state["CakesCartItems"]["cartitems"],
+    placeorder: state["CakesCartItems"]["placeorder"],
     isloading: state['CakesCartItems']['isloading'],
     isuserloggedin: state["AuthReducer"]["isuserloggedin"],
     authtoken:state["AuthReducer"]["user"] && state["AuthReducer"]["user"]["token"],

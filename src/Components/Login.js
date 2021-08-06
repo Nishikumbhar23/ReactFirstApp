@@ -39,13 +39,17 @@ showLoader = () => {
         });
       }
     this.props.dispatch(Loginthunk(this.user))
-    setTimeout(() => {
       if(this.props.isuserloggedin==true){
-        // alert("hiiii")
+        alert("hiiii")
         console.log(".........",this.props)
-        this.props.history.push("/");
-      } 
-    }, 1000);
+      }
+    // setTimeout(() => {
+    //   if(this.props.isuserloggedin==true){
+    //     alert("hiiii")
+    //     console.log(".........",this.props)
+    //     this.props.history.push("/");
+    //   } 
+    // }, 1000);
     
     // localStorage.token = response.data.token
 

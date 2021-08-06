@@ -33,27 +33,59 @@ export  function PlaceOrderthunk(data){
         dispatch({
             type:"CART_FETCHING"
         })
-        var result  = await  axios({
+       let apiurl="https://apifromashu.herokuapp.com/api/addcakeorder"
+        var result  = await axios({
             method:"post",
-            url:"https://apifromashu.herokuapp.com/api/addcakeorder",
-            data:data,
+            url:apiurl,
+             data:data,
             headers:{
                 authtoken:localStorage.token
             }
         })
-        console.log("result",result)
+        console.log("result",data)
         localStorage.token = result.data.token
         console.log("token==",result.data.token)
         if(result.data.token){
             dispatch({
                 type:"PLACEORDER_SUCCESS",
                 payload:result.data
+            })  
+        }
+        else{
+            dispatch({
+                type:"PLACEORDER_FAILURE"
+            })
+        }
+       
+    }
+}
+
+export  function Ordersthunk(data){
+    return async (dispatch)=>{
+        dispatch({
+            type:"CART_FETCHING"
+        })
+        var result  = await  axios({
+            method:"post",
+            url:"https://apifromashu.herokuapp.com/api/cakeorders",
+            data:{},
+            headers:{
+                authtoken:localStorage.token
+            }
+        });
+        console.log("result",result)
+        localStorage.token = result.data.token
+        console.log("token==",result.data.token)
+        if(result.data.token){
+            dispatch({
+                type:"ORDER_SUCCESS",
+                payload:result.data
             })
             
         }
         else{
             dispatch({
-                type:"PLACEORDER_FAILURE"
+                type:"ORDER_FAILURE"
             })
         }
        
