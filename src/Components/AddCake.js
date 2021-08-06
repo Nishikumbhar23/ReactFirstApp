@@ -1,6 +1,6 @@
 export function AddCake() {
     return(
-        <div class="add-cake p-4 my-4" style={{margin:"auto",background:"whitesmoke"}}>
+        <div class="add-cake p-4 my-4" style={{width:"80%",margin:"auto",background:"whitesmoke"}}>
             <h3 class="text-center mb-3" style={{color:"#38768a"}}><b>Add Cake Detail</b>s</h3>
             <form>
                 <div class="form-group mb-3">

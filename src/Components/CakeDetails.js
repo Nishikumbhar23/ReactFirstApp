@@ -89,7 +89,9 @@ function CakeDetails(props){
           <div class="col-sm-5">
               {/* <img style={{height:"18rem"}} src='/cake1.jpg' class=""></img> */}
               <img src={cakeDetails.image} style={{width:"460px",height:"500px"}} className="" alt="..."/>
-
+              <h6 className="mt-3 text-center">Ingredients: <ol > {cakeDetails.ingredients && cakeDetails.ingredients.map((each,index)=>{
+                                    return(<li className="mr-3" style={{display:"inline"}}  key={index}>{each},</li>)})
+                             }</ol></h6>
           </div>
           <div class="col-sm-7  text-center">
               <h1 class="mb-3" style={{color:"#38768a"}}><b>{cakeDetails.name}</b></h1>
@@ -106,7 +108,8 @@ function CakeDetails(props){
               <h5 className=""><span style={{color:"#38768a"}}><b>Current rate : </b></span>{cakeDetails.price}</h5>
               <h5 className=""><span style={{color:"#38768a"}}><b>Flovor </b></span>{cakeDetails.flavour}</h5>
               <h5 className=""><span style={{color:"#38768a"}}><b>Weight </b></span>{cakeDetails.weight} kg</h5>
-              <h5 className="mb-5"><span style={{color:"#38768a"}}><b>Occasion : </b></span>{cakeDetails.type}</h5>
+              <h5 lassName="mb-5"><span style={{color:"#38768a"}}><b>Occasion : </b></span>{cakeDetails.type}</h5>
+              
               <button onClick={addToCart} type="submit"  class="btn btn-primary" style={{backgroundColor:"#38768a"}}>Add to cart</button>
           </div>
       </div>

@@ -61,6 +61,7 @@ function Navbar(props){
     <Link to="/login"> <button class="btn btn-light my-2 my-sm-0 mr-2" type="submit">Login</button></Link>
     </form>}
     {props.isuserloggedin==true &&  <form class="form-inline my-2 my-lg-0">
+      <Link to="/orderhistory"> <span className="text-white mr-3">View Order history</span></Link>
     <button onClick={showCart} class="btn btn-outline-light my-2 my-sm-0 mr-2" type="submit">Cart</button>
     <button onClick={logout} class="btn btn-light my-2 my-sm-0 mr-2 ml-auto" type="submit">Logout</button>
 

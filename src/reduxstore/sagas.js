@@ -1,6 +1,7 @@
 import {all,takeEvery,put} from "redux-saga/effects"
 import axios from "axios"
 import {cakesCart} from "../index"
+import { toast } from "react-toastify";
 
 function  *CartGenerator() {
     var success =true;
@@ -152,12 +153,13 @@ function *RemoveItemSaga(){
         },
         data: action.payload
     })
-    console.log("Response from order cake????????", response)
-    if(response.data.message=="Removed  item from cart"){
+    console.log("Response from place order", response)
+    if(response.data.messageg=="order placed"){
         yield put({
             type: "PLACEORDER_SUCCESS",
-            payload: response.data.message
+            payload: response.data.messageg
         })
+        toast.success("order placed successfully");
     }
     else{
         yield put({

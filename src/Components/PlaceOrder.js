@@ -33,13 +33,24 @@ function handleSubmit(event) {
         type:"PlaceOrder_Items",
         payload:user
     })
-
-    if(props.placeorder){
-        toast.success("order placed successfully");
+    console.log("............",props.placeorder);
+    if(user.name=="" || user.name==undefined || user.phone== "" || user.phone==undefined || user.address=="" || user.address==undefined || user.area== "" || user.area==undefined || user.city== "" || user.city==undefined || user.pincode== "" || user.pincode==undefined ){
+        toast.error("Please enter all details", {
+            position: "top-center",
+          });
     }
     else{
-        toast("order placed successfully")
+             toast.success("order placed successfully");
+              props.history.push('/orderhistory')
     }
+    // if(props.placeorder){
+    //     alert("order placed")
+    //     toast.success("order placed successfully");
+    //     props.history.push('/orderhistory')
+    // }
+    // else{
+    //     toast("order placed successfully")
+    // }
 }
     // render(){
     return(
@@ -103,7 +114,7 @@ PlaceOrder = withRouter(PlaceOrder)
 export default connect(function(state,props) {
   return {
     cartitems : state["CakesCartItems"]["cartitems"],
-    placeorder: state["CakesCartItems"]["placeorder"],
+    placeorder: state["CakesCartItems"]["placeorder"]|| [],
     isloading: state['CakesCartItems']['isloading'],
     isuserloggedin: state["AuthReducer"]["isuserloggedin"],
     authtoken:state["AuthReducer"]["user"] && state["AuthReducer"]["user"]["token"],

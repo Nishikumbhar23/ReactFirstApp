@@ -95,7 +95,7 @@ export var CakesCartItems= function (state={
         case "ORDER_SUCCESS":{
             state = {...state}
             state["isloading"] = false
-            state['order'] = action.payload
+            state['orders'] = action.payload
             return state;
         }
         case "ORDER_FAILURE" :{

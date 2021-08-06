@@ -11,6 +11,7 @@ import Pagenotfound from './Components/PageNotFound'
 import RecoverPassword from './Components/RecoverPassword'
 import Cart from './Components/Cart'
 import PlaceOrder from './Components/PlaceOrder'
+import OrderHistory from './Components/OrderHistory'
 import CakeDetails from './Components/CakeDetails'
 import  { useState,useEffect } from 'react';
 import  {BrowserRouter, Route, Switch} from "react-router-dom";
@@ -60,6 +61,8 @@ useEffect(() => {
       <Route exact path="/cart" component={Cart}></Route>
       <Route exact path="/placeorder" component={PlaceOrder}></Route>
       <Route exact path="/cake/:cakeid" component={CakeDetails}></Route>
+      <Route exact path="/orderhistory" component={OrderHistory}></Route>
+
       <Route exact path="**" component={Pagenotfound} />
       </Switch>
       </BrowserRouter>
